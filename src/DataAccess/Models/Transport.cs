@@ -1,6 +1,6 @@
 ﻿namespace DataAccess.Models
 {
-    public class Transport
+    public sealed class Transport
     {
         public string FlightCarrier { get; set; }
         public string FlightNumber { get; set; }
@@ -11,6 +11,7 @@
             FlightNumber = flightNumber;
         }
 
+        //Static Factory Pattern.
         public static Transport Create(string FlightCarrier, string FlightNumber)
         {
             return new Transport(FlightCarrier, FlightNumber);

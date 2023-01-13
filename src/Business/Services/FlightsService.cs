@@ -36,39 +36,63 @@ namespace Business.Services
                 return null;
 
             var flightsResponse = await response.Content.ReadFromJsonAsync<List<ApiFlightResponseDTO>>();
+            var list = new List<FlightDTO>();
 
-            var Otherflights = flightsResponse
-                .Where(x => x.DepartureStation == origin || x.ArrivalStation == destination
-                );
+            var directFlights = flightsResponse.Where(x => x.DepartureStation == origin && x.ArrivalStation == destination).FirstOrDefault();
 
-            var mainFlights = flightsResponse
-                .Where(x => x.DepartureStation == origin && x.ArrivalStation == destination ||
-                    x.DepartureStation == origin || x.ArrivalStation == destination
-                ).Union(Otherflights);
+            if (directFlights is not null)
+            {
+                list.Add(this.GetFlightsFromResponse(directFlights));
 
-            //validations with FluentResults
-            var list = this.GetFlightsFromResponse(mainFlights);
+                return list;
+            }
 
-            return _mapper.Map<List<FlightDTO>>(list);
+            var mainFlights = flightsResponse.Where(x => x.DepartureStation == origin)
+                .SelectMany(f => flightsResponse.Where(f2 => f2.DepartureStation == f.ArrivalStation
+                && f2.ArrivalStation == destination)
+                .Select(f2 => new List<ApiFlightResponseDTO> { f, f2 }));
+
+            if (directFlights is null && mainFlights is null)
+                return null;
+
+            list.AddRange(this.GetFlightsFromResponse(mainFlights));
+
+            //parallel invoke to db
+            return list;
         }
 
-        private IEnumerable<FlightDTO> GetFlightsFromResponse(IEnumerable<ApiFlightResponseDTO> flights)
+        private IEnumerable<FlightDTO> GetFlightsFromResponse(IEnumerable<List<ApiFlightResponseDTO>>? flights)
         {
             var list = new List<FlightDTO>();
 
-            foreach (var item in flights)
+            foreach (var flighsList in flights)
             {
-                var transport = Transport.Create(item.FlightCarrier, item.FlightNumber);
+                foreach (var item in flighsList)
+                {
+                    var transport = Transport.Create(item.FlightCarrier, item.FlightNumber);
 
-                var flight = Flight.Create(transport,
-                    item.DepartureStation,
-                    item.ArrivalStation,
-                    item.Price);
+                    var flight = Flight.Create(transport,
+                        item.DepartureStation,
+                        item.ArrivalStation,
+                        item.Price);
 
-                list.Add(_mapper.Map<FlightDTO>(flight));
+                    list.Add(_mapper.Map<FlightDTO>(flight));
+                }
             }
 
             return list;
+        }
+
+        private FlightDTO GetFlightsFromResponse(ApiFlightResponseDTO item)
+        {
+            var transport = Transport.Create(item.FlightCarrier, item.FlightNumber);
+
+            var flight = Flight.Create(transport,
+                item.DepartureStation,
+                item.ArrivalStation,
+                item.Price);
+
+            return _mapper.Map<FlightDTO>(flight);
         }
     }
 }

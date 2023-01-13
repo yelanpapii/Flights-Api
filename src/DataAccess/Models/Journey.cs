@@ -2,10 +2,8 @@
 
 namespace DataAccess.Models
 {
-    public class Journey
+    public sealed class Journey
     {
-
-        
         public string Origin { get; set; }
         public string Destination { get; set; }
         public double Price { get; set; }

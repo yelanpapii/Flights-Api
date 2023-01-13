@@ -13,10 +13,11 @@ namespace Business
         double Price,
         List<Flight> Flights);
 
-    public record FlightDTO(Transport Transport,
+    public record FlightDTO(
         string Origin,
         string Destination,
-        double Price);
+        double Price,
+        Transport Transport);
     
     public record ApiFlightResponseDTO(string DepartureStation,
         string ArrivalStation,
