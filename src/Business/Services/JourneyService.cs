@@ -36,13 +36,17 @@ namespace Business.Services
 
         public async Task<JourneyDTO> GetJourneyAsync(string origin, string destination)
         {
+            //Get flights by origin and destination
             var flight = await _flightsService.GetAllFlightAsync(origin, destination);
             var price = flight.Sum(x => x.Price);
 
+            
             var flightMap = _mapper.Map<IEnumerable<Flight>>(flight);
 
+            //Static Factory method to create a journey with mapped flights and price.
             var journey = Journey.Create(origin, destination, price, flightMap);
 
+            //Add to db
             await _journeyRepository.CreateJourney(journey);
 
             return _mapper.Map<JourneyDTO>(journey);

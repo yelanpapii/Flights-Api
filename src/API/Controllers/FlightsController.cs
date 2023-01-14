@@ -21,6 +21,7 @@ namespace API.Controllers
             if (string.IsNullOrWhiteSpace(origin) || string.IsNullOrWhiteSpace(destination))
                 return BadRequest("Porfavor ingrese destino o origen validos. ");
 
+            
             var dbJourney = await _journeyService.GetJourneyFromDbAsync(origin.ToUpper().Trim(), destination.ToUpper().Trim());
 
             if (dbJourney is not null)
@@ -28,6 +29,7 @@ namespace API.Controllers
                 return Ok(dbJourney);
             }
 
+            //Si journey no existe en la base de datos, solicitud a la api de newshore.
             var journey = await _journeyService.GetJourneyAsync(origin.ToUpper().Trim(), destination.ToUpper().Trim());
 
             return Ok(journey);

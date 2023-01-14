@@ -75,6 +75,7 @@ namespace Business.Services
             if (directFlights is null && mainFlights is null)
                 return null;
 
+            //Map model to dto and add them to the list response. 
             list.AddRange(await this.GetFlightsFromResponse(mainFlights));
 
 
@@ -85,6 +86,7 @@ namespace Business.Services
         {
             var list = new List<FlightDTO>();
 
+            //filter flights in the list
             foreach (var flighsList in flights)
             {
                 foreach (var item in flighsList)
@@ -96,6 +98,7 @@ namespace Business.Services
                         item.ArrivalStation,
                         item.Price);
 
+                    //add flight to db.
                     await _flightsRepository.CreateFlight(flight);
 
                     list.Add(_mapper.Map<FlightDTO>(flight));
