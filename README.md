@@ -1,4 +1,5 @@
 # Flights-Api
+ApiRest escrita en .NET 5
 Dificultad Utilizada: Rutas multiples y de retorno.
 # Conceptos Utilizados: 
 MySql y Asp.Net Core:
@@ -14,7 +15,7 @@ Control de excepciones,
 Manejo de ORM,
 Nomenclatura C#
 
-#Como ejecutar la aplicacion.
+# Como ejecutar la aplicacion.
 
 1. Clonar proyecto con visual studio.
 
