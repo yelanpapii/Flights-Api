@@ -1,4 +1,6 @@
 ﻿using Business.Common;
+using Business.Repository;
+using Business.Repository.Interface;
 using Business.Services;
 using Business.Services.Interface;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,9 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IApiUrl, ApiUrl>();
 
             services.AddScoped<FlightsService>();
+
+            services.AddScoped<IFlightRepository, FlightRepository>();
+            services.AddScoped<IJourneyRepository, JourneyRepository>();
 
             services.AddScoped<IFlightsService, FlightsService>();
 

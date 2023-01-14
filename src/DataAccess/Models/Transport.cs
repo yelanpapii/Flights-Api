@@ -1,9 +1,22 @@
-﻿namespace DataAccess.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
+
+#nullable disable
+
+namespace DataAccess.Models
 {
-    public sealed class Transport
+    public partial class Transport
     {
+        public Transport()
+        {
+           
+        }
+
+        public int Id { get; set; }
         public string FlightCarrier { get; set; }
         public string FlightNumber { get; set; }
+
 
         public Transport(string flightCarrier, string flightNumber)
         {

@@ -1,8 +1,10 @@
 using Business.Services;
+using DataAccess.Persistence.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,6 +32,7 @@ namespace API
 
             services.AddHttpClient();
             services.AddControllers();
+            services.AddDataAccessServices(Configuration);
             services.AddBusinessServices(Configuration);
             services.AddSwaggerGen(c =>
             {

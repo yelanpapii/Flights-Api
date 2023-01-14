@@ -20,9 +20,14 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<JourneyDTO> GetJourney(string origin, string destination)
+        public async Task<IActionResult> GetJourney(string origin, string destination)
         {
-            return await _journeyService.GetJourneyAsync(origin, destination);
+            if (string.IsNullOrWhiteSpace(origin) || string.IsNullOrWhiteSpace(destination))
+                return BadRequest("Porfavor ingrese destino o origen validos. ");
+            
+            var journey = await _journeyService.GetJourneyAsync(origin.ToUpper().Trim(), destination.ToUpper().Trim());
+
+            return Ok(journey);
         }
 
     }
