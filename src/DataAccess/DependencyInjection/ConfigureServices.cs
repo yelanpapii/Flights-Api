@@ -1,5 +1,4 @@
-﻿using DataAccess.Persistence;
-using DataAccess.Persistence.Context;
+﻿using DataAccess.Persistence.Context;
 using DataAccess.Persistence.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

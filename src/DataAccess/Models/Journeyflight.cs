@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
 namespace DataAccess.Models
 {
     public partial class Journeyflight
-    { 
+    {
 
+        [ForeignKey("Id")]
         public int IdJourney { get; set; }
+        [ForeignKey("Id")]
         public int IdFlight { get; set; }
 
         public virtual Flight IdFlightNavigation { get; set; }

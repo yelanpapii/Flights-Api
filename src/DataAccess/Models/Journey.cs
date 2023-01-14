@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
@@ -20,7 +19,7 @@ namespace DataAccess.Models
 
         public Journey(string origin, string destination, double price, IEnumerable<Flight> flights)
         {
-            
+
             Origin = origin;
             Destination = destination;
             Price = price;
@@ -29,7 +28,7 @@ namespace DataAccess.Models
 
         //Static Factory Pattern.
         public static Journey Create(string Origin, string Destination, double Price, IEnumerable<Flight> flights)
-        { 
+        {
             return new Journey(Origin, Destination, Price, flights);
         }
     }

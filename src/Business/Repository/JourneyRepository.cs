@@ -1,11 +1,8 @@
 ﻿using Business.Repository.Interface;
 using DataAccess.Models;
 using DataAccess.Persistence.Interface;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Repository
@@ -19,22 +16,33 @@ namespace Business.Repository
             _context = context;
         }
 
-        public async Task<Journey> GetJourney(int id)
+        public async Task<Journey> GetJourney(string origin, string destination)
         {
-            return await _context.Journeys.Where(x => x.Id == id)
-                .Include(x => x.Flights).FirstOrDefaultAsync();
+            return await _context.Journeys
+                .Include(x => x.Flights).ThenInclude(z => z.Transport).FirstOrDefaultAsync(x => x.Origin == origin && x.Destination == destination);
         }
 
         public async Task CreateJourney(Journey journey)
         {
-            await _context.Journeys.AddAsync(journey);
-            await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
+            if (!await _context.Journeys.ContainsAsync(journey))
+            {
+                await _context.Journeys.AddAsync(journey);
+                await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
+            }
+
         }
 
         public async Task CreateJourney(List<Journey> journey)
         {
-            await _context.Journeys.AddRangeAsync(journey);
-            await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
+            foreach (var item in journey)
+            {
+                if (!await _context.Journeys.ContainsAsync(item))
+                {
+                    await _context.Journeys.AddAsync(item);
+                    await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
+                }
+            }
+
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Business.Services
         {
             await _flightsRepository.CreateFlight(_mapper.Map<Flight>(flight));
         }
-        
+
         public async Task<FlightDTO> GetInDbFlightAsync(int id)
         {
             var flight = await _flightsRepository.GetFlight(id);

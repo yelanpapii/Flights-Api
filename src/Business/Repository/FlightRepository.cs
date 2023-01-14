@@ -2,10 +2,8 @@
 using DataAccess.Models;
 using DataAccess.Persistence.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Repository
@@ -31,19 +29,19 @@ namespace Business.Repository
                 await _context.Flights.AddAsync(flight);
                 await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
             }
-            
+
         }
 
         public async Task CreateFlight(List<Flight> flight)
         {
-            foreach(var item in flight)
+            foreach (var item in flight)
             {
                 if (!await _context.Flights.ContainsAsync(item))
                     await _context.Flights.AddAsync(item);
-                    await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
+                await _context.SaveChangesAsync(System.Threading.CancellationToken.None);
 
             }
-            
+
         }
     }
 }

@@ -1,9 +1,5 @@
-﻿using Business;
-using Business.Services.Interface;
+﻿using Business.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -24,7 +20,14 @@ namespace API.Controllers
         {
             if (string.IsNullOrWhiteSpace(origin) || string.IsNullOrWhiteSpace(destination))
                 return BadRequest("Porfavor ingrese destino o origen validos. ");
-            
+
+            var dbJourney = await _journeyService.GetJourneyFromDbAsync(origin.ToUpper().Trim(), destination.ToUpper().Trim());
+
+            if (dbJourney is not null)
+            {
+                return Ok(dbJourney);
+            }
+
             var journey = await _journeyService.GetJourneyAsync(origin.ToUpper().Trim(), destination.ToUpper().Trim());
 
             return Ok(journey);

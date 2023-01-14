@@ -2,10 +2,8 @@
 using Business.Repository.Interface;
 using Business.Services.Interface;
 using DataAccess.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Business.Services
@@ -28,6 +26,12 @@ namespace Business.Services
         public async Task CreateJourneyAsync(JourneyDTO journey)
         {
             await _journeyRepository.CreateJourney(_mapper.Map<Journey>(journey));
+        }
+
+        public async Task<JourneyDTO> GetJourneyFromDbAsync(string origin, string destination)
+        {
+            var journey = await _journeyRepository.GetJourney(origin, destination);
+            return _mapper.Map<JourneyDTO>(journey);
         }
 
         public async Task<JourneyDTO> GetJourneyAsync(string origin, string destination)

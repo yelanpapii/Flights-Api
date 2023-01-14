@@ -10,6 +10,6 @@ namespace Business.Common
         {
             Url = new Uri("https://recruiting-api.newshore.es/api/flights/2");
         }
-        
+
     }
 }

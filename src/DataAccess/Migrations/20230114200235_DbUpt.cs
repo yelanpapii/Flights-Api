@@ -82,29 +82,6 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "journeyflights",
-                columns: table => new
-                {
-                    id_journey = table.Column<int>(type: "int(11)", nullable: false),
-                    id_flight = table.Column<int>(type: "int(11)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.ForeignKey(
-                        name: "journeyflights_flights_fk",
-                        column: x => x.id_flight,
-                        principalTable: "flights",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "journeyflights_journeys_fk",
-                        column: x => x.id_journey,
-                        principalTable: "journeys",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_FlightJourney_JourneysId",
                 table: "FlightJourney",
@@ -114,16 +91,6 @@ namespace DataAccess.Migrations
                 name: "IX_Flights_TransportId",
                 table: "flights",
                 column: "TransportId");
-
-            migrationBuilder.CreateIndex(
-                name: "journeyflights_flights_fk",
-                table: "journeyflights",
-                column: "id_flight");
-
-            migrationBuilder.CreateIndex(
-                name: "journeyflights_journeys_fk",
-                table: "journeyflights",
-                column: "id_journey");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

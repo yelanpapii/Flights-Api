@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -10,11 +9,12 @@ namespace DataAccess.Models
     {
         public Transport()
         {
-           
+
         }
 
         public int Id { get; set; }
         public string FlightCarrier { get; set; }
+        [Index("Ix_FlightNumber", Order = 1, IsUnique = true)]
         public string FlightNumber { get; set; }
 
 

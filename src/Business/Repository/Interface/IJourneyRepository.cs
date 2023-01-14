@@ -8,6 +8,6 @@ namespace Business.Repository.Interface
     {
         Task CreateJourney(Journey journey);
         Task CreateJourney(List<Journey> journey);
-        Task<Journey> GetJourney(int id);
+        Task<Journey> GetJourney(string origin, string destination);
     }
 }

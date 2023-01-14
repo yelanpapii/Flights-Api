@@ -4,13 +4,7 @@ using Business.Repository.Interface;
 using Business.Services;
 using Business.Services.Interface;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -32,7 +26,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IFlightsService, FlightsService>();
 
             services.AddScoped<IJourneyService, JourneyService>();
-            
+
             return services;
         }
     }

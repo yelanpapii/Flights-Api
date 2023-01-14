@@ -1,8 +1,6 @@
-﻿using System;
+﻿using DataAccess.Models;
 using DataAccess.Persistence.Interface;
-using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
 #nullable disable
@@ -98,6 +96,7 @@ namespace DataAccess.Persistence.Context
                 entity.ToTable("transports");
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
+
             });
 
             OnModelCreatingPartial(modelBuilder);
