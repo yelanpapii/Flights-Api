@@ -3,6 +3,7 @@ using Business.Common;
 using Business.Repository.Interface;
 using Business.Services.Interface;
 using DataAccess.Models;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -15,12 +16,14 @@ namespace Business.Services
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IFlightRepository _flightsRepository;
+        private readonly ILogger<FlightsService> _logger;
         private readonly IMapper _mapper;
         private readonly IApiUrl _apiUrl;
 
         public FlightsService(IHttpClientFactory httpClient,
             IApiUrl apiUrl,
             IFlightRepository flightsRepository,
+            ILogger<FlightsService> logger,
             IMapper mapper
             )
         {
@@ -28,6 +31,7 @@ namespace Business.Services
             _mapper = mapper;
             _apiUrl = apiUrl;
             _httpClient = httpClient;
+            _logger = logger;
         }
 
         //Get all flights by origin and destination.
@@ -50,7 +54,10 @@ namespace Business.Services
             var response = await httpClient.GetAsync(_apiUrl.Url.AbsoluteUri);
 
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                _logger.LogError("Servicio web caido o no responde");
                 return null;
+            }
 
             //Read the response from the api
             var flightsResponse = await response.Content.ReadFromJsonAsync<List<ApiFlightResponseDTO>>();
@@ -73,7 +80,11 @@ namespace Business.Services
                 .Select(f2 => new List<ApiFlightResponseDTO> { f, f2 }));
 
             if (directFlights is null && mainFlights is null)
+            {
+                _logger.LogError("No existen vuelos con las localidades ingresadas");
                 return null;
+            }
+                
 
             //Map model to dto and add them to the list response. 
             list.AddRange(await this.GetFlightsFromResponse(mainFlights));

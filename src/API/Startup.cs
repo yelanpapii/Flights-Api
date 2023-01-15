@@ -22,6 +22,7 @@ namespace API
 
             services.AddHttpClient();
             services.AddControllers();
+            services.AddLogging();
             services.AddDataAccessServices(Configuration);
             services.AddBusinessServices(Configuration);
             services.AddSwaggerGen(c =>

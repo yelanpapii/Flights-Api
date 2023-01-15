@@ -2,6 +2,7 @@
 using Business.Repository.Interface;
 using Business.Services.Interface;
 using DataAccess.Models;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +14,14 @@ namespace Business.Services
         private readonly IMapper _mapper;
         private readonly IFlightsService _flightsService;
         private readonly IJourneyRepository _journeyRepository;
+        private readonly ILogger<JourneyService> _logger;
 
         public JourneyService(FlightsService flightsService,
             IMapper mapper,
-            IJourneyRepository journeyRepository)
+            IJourneyRepository journeyRepository,
+            ILogger<JourneyService> logger)
         {
+            _logger = logger;
             _journeyRepository = journeyRepository;
             _mapper = mapper;
             _flightsService = flightsService;
@@ -38,6 +42,13 @@ namespace Business.Services
         {
             //Get flights by origin and destination
             var flight = await _flightsService.GetAllFlightAsync(origin, destination);
+
+            if(flight is null)
+            {
+                _logger.LogError("No existen vuelos con las localidades ingresadas");
+                return null;
+            }
+
             var price = flight.Sum(x => x.Price);
 
             
