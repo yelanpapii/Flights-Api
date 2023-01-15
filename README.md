@@ -4,6 +4,8 @@ Dificultad Utilizada: Rutas multiples y de retorno.
 # Conceptos Utilizados: 
 MySql y Asp.Net Core:
 Logging,
+Linq,
+Entity Framework
 Static Factory Pattern,
 Repository-Service Pattern,
 DTOs Pattern,
