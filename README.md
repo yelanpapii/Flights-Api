@@ -3,9 +3,10 @@ ApiRest escrita en .NET 5
 Dificultad Utilizada: Rutas multiples y de retorno.
 # Conceptos Utilizados: 
 MySql y Asp.Net Core:
+Swagger,
 Logging,
 Linq,
-Entity Framework
+Entity Framework,
 Static Factory Pattern,
 Repository-Service Pattern,
 DTOs Pattern,
@@ -22,7 +23,7 @@ Nomenclatura C#
 
 # Como ejecutar la aplicacion.
 
-1. Clonar proyecto con visual studio.
+1. Clonar proyecto con visual studio y abrir archivo de solucion BackendTest.
 
 2. Cambiar cadena de conexion en appsettings.json (MySQL)
 
