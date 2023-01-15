@@ -6,10 +6,13 @@ MySql y Asp.Net Core:
 Logging,
 Static Factory Pattern,
 Repository-Service Pattern,
-DTO Pattern,
+DTOs Pattern,
 AutoMapper(Mapear Objetos Dto a Models)
 Inyeccion de Dependencias.
 
+SOLID,
+KISS,
+DRY,
 Arquitectura N Capas,
 Control de excepciones,
 Manejo de ORM,
@@ -19,8 +22,8 @@ Nomenclatura C#
 
 1. Clonar proyecto con visual studio.
 
-2. Cambiar cadena de conexion en appsettings.json
+2. Cambiar cadena de conexion en appsettings.json (MySQL)
 
-3. Ejecutar comando "Update-Database" en consola de administrador de paquetes
+3. Ejecutar comando "Update-Database" en consola de administrador de paquetes (Asegurarse que el proyecto determinado sea "DataAccess" y proyecto de inicio "API")
 
 4. Colocar proyecto API como proyecto inicial y ejecutarlo.
