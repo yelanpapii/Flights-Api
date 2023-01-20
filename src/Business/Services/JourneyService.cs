@@ -16,7 +16,7 @@ namespace Business.Services
         private readonly IJourneyRepository _journeyRepository;
         private readonly ILogger<JourneyService> _logger;
 
-        public JourneyService(FlightsService flightsService,
+        public JourneyService(IFlightsService flightsService,
             IMapper mapper,
             IJourneyRepository journeyRepository,
             ILogger<JourneyService> logger)
@@ -59,7 +59,7 @@ namespace Business.Services
 
             //Add to db
             await _journeyRepository.CreateJourney(journey);
-
+     
             return _mapper.Map<JourneyDTO>(journey);
         }
     }

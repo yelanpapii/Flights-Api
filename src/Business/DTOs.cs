@@ -7,7 +7,7 @@ namespace Business
         string Origin,
         string Destination,
         double Price,
-        List<Flight> Flights);
+        List<FlightDTO> Flights);
 
     public record FlightDTO(
         string Origin,
